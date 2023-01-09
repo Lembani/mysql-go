@@ -8,9 +8,9 @@
 
 ## Getting Started
 
-If you want a copy of this project go to the [GitHub repository](https://github.com/Lembani/event-publisher.git) and download it from the link below.
+If you want a copy of this project go to the [GitHub repository](https://github.com/Lembani/mysql-go.git) and download it from the link below.
 
-- [Event Publisher](https://github.com/Lembani/event-publisher.git)
+- [MySQL Go](https://github.com/Lembani/mysql-go.git)
 
 
 To get a local copy up and running follow these simple example steps.
