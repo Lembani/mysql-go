@@ -40,3 +40,53 @@ func (m *MySQL) initDB() (db *sql.DB, err error) {
 
 	return db, nil
 }
+
+func (m *MySQL) Query(query string) (res string, err error) {
+	db, err := m.initDB()
+	if err != nil {
+		return res, err
+	}
+
+	defer db.Close()
+
+	rows, err := db.Query(query)
+	if err != nil {
+		return res, err
+	}
+
+	defer rows.Close()
+
+	columns, err := rows.Columns()
+	if err != nil {
+		return res, err
+	}
+
+	values := make([]sql.RawBytes, len(columns))
+	scanArgs := make([]interface{}, len(values))
+	for i := range values {
+		scanArgs[i] = &values[i]
+	}
+
+	for rows.Next() {
+		err = rows.Scan(scanArgs...)
+		if err != nil {
+			return res, err
+		}
+
+		var value string
+		for i, col := range values {
+			if col == nil {
+				value = "NULL"
+			} else {
+				value = string(col)
+			}
+			fmt.Println(columns[i], ": ", value)
+		}
+		fmt.Println("----------------")
+	}
+	if err = rows.Err(); err != nil {
+		return res, err
+	}
+
+	return res, nil
+}
